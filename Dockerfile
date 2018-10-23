@@ -23,6 +23,12 @@
 # $ sudo mv okularpart.so /usr/lib/x86_64-linux-gnu/qt5/plugins/
 # $ sudo mv libOkular5Core.so.8.0.0 /usr/lib/x86_64-linux-gnu
 #
+# Fix file permissions
+# $ sudo chown root: /usr/lib/x86_64-linux-gnu/qt5/plugins/okularpart.so
+# $ sudo chmod 644 /usr/lib/x86_64-linux-gnu/qt5/plugins/okularpart.so
+# $ sudo chown root: /usr/lib/x86_64-linux-gnu/libOkular5Core.so.8.0.0
+# $ sudo chmod 644 /usr/lib/x86_64-linux-gnu/libOkular5Core.so.8.0.0
+#
 # Remove docker remains
 # WARNING: The following commands remove ALL containers and images.
 # If you have other containers and/or images, remove them selectively.

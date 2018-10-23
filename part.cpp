@@ -2466,7 +2466,7 @@ bool Part::slotSaveFileAs( bool showOkularArchiveAsDefaultFormat )
 
     QString filter = originalMimeTypeFilter + QStringLiteral(";;") + okularArchiveMimeTypeFilter;
 
-    const QUrl saveUrl = QFileDialog::getSaveFileUrl(widget(), i18n("Save As"), url(), filter, &selectedFilter);
+    const QUrl saveUrl = QFileDialog::getSaveFileUrl(widget(), i18n("Save As"), saveNameSuggestion(), filter, &selectedFilter);
 
     if ( !saveUrl.isValid() || saveUrl.isEmpty() )
         return false;
@@ -2475,6 +2475,30 @@ bool Part::slotSaveFileAs( bool showOkularArchiveAsDefaultFormat )
     const bool saveAsOkularArchive = ( selectedFilter == okularArchiveMimeTypeFilter );
 
     return saveAs( saveUrl, saveAsOkularArchive ? SaveAsOkularArchive : NoSaveAsFlags );
+}
+
+const QUrl Part::saveNameSuggestion() const
+{
+    // FIXME: Make configurable
+    // Set up options
+    QVector<QString> options;
+    options.append("author");
+    options.append("title");
+    options.append("year");
+
+    // Get content from annotations
+    QMap<QString, QString> annotations = m_document->getAnnotation(options);
+    // FIXME: "Lastname Firstname" for author fields
+
+    // Construct file name suggestion
+    if ( annotations.contains("author") && annotations.contains("title") )
+        return QUrl( annotations["author"] + " - " + annotations["title"] + ".pdf" );
+    else if ( annotations.contains("author") )
+        return QUrl( annotations["author"] + ".pdf" );
+    else if ( annotations.contains("title") )
+        return QUrl( annotations["title"] + ".pdf" );
+    else
+        return url();
 }
 
 bool Part::saveAs(const QUrl & saveUrl)

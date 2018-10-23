@@ -289,6 +289,8 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
 
         static int numberOfParts;
 
+        const QUrl saveNameSuggestion() const;
+
         QTemporaryFile *m_tempfile;
 
         // the document

@@ -577,6 +577,12 @@ class OKULARCORE_EXPORT Document : public QObject
         void removePageAnnotations( int page, const QList<Annotation*> &annotations );
 
         /**
+         * Returns annotation texts matching specified keys.
+         * @param options A list of keys to be extracted.
+         */
+        const QMap<QString, QString> getAnnotation(const QVector<QString> options) const;
+
+        /**
          * Sets the text selection for the given @p page.
          *
          * @param rect The rectangle of the selection.

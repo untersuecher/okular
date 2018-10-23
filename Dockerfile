@@ -6,9 +6,6 @@
 # [Lists some images, with IDs. Identify the right one (probably the top)]
 # $ docker run -i -t [ID]
 # [You're dropped into a bash inside the image]
-# # cd /root/okular/build
-# # make
-# [This might take some time]
 # [After building, copy the file /root/okular/build/lib/okularpart.so to
 #  your okular installation.]
 # 
@@ -45,7 +42,7 @@ RUN apt-get install -y  pkg-config \
 
 
 # Get sources
-RUN git clone https://github.com/untersuecher/okular /root/okular
+RUN git clone -b mb/annotations-16.08.1 https://github.com/untersuecher/okular /root/okular
 
 # CMake
 RUN mkdir /root/okular/build && \

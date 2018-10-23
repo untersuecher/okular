@@ -618,6 +618,23 @@ class TextSelectorEngine : public AnnotatorEngine
                 ann = ha;
             }
 
+            bool useKey = 0;
+            if ( m_annotElement.hasAttribute( "key" ) )
+            {
+                useKey = 1;
+                const QString keyString = m_annotElement.attribute( "key" );
+
+                text = item()->page()->text(selection, Okular::TextPage::CentralPixelTextAreaInclusionBehaviour);
+                text.remove(QString("-\n"));
+                text.replace(QChar('\n'), QChar(' '));
+                text = text.trimmed();
+
+                if ( ! keyString.isEmpty() )
+                {
+                     text = "<" + keyString + ">" + text + "</" + keyString + ">";
+                }
+            }
+
             delete selection;
             selection = 0;
 
@@ -630,6 +647,9 @@ class TextSelectorEngine : public AnnotatorEngine
                 m_annotElement.attribute( "color" ) : m_engineColor );
             if ( m_annotElement.hasAttribute( "opacity" ) )
                 ann->style().setOpacity( m_annotElement.attribute( "opacity", "1.0" ).toDouble() );
+
+            if ( useKey )
+                ann->setContents(text);
 
             // return annotations
             return QList< Okular::Annotation* >() << ann;
@@ -647,6 +667,7 @@ class TextSelectorEngine : public AnnotatorEngine
         Okular::RegularAreaRect * selection;
         Okular::NormalizedPoint lastPoint;
         QRect rect;
+        QString text;
 };
 
 

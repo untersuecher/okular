@@ -1126,11 +1126,14 @@ class OKULARCORE_EXPORT HighlightAnnotation : public Annotation
          * @see HighlightType
          */
         void setHighlightType( HighlightType type );
+        void setKey( bool use, QString text );
 
         /**
          * Returns the type of the highlight annotation.
          */
         HighlightType highlightType() const;
+        bool useKey() const;
+        QString keyText() const;
 
         /**
          * The Quad class contains 8 coordinates and style definitions
